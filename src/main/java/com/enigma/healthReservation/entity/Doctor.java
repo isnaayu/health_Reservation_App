@@ -3,6 +3,7 @@ package com.enigma.healthReservation.entity;
 import com.enigma.healthReservation.constant.EAvailability;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
