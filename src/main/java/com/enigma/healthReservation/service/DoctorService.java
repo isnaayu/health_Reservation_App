@@ -8,4 +8,6 @@ import java.util.List;
 public interface DoctorService {
     DoctorResponse createDoctor(DoctorRequest doctorRequest);
     List<DoctorResponse> getAll();
+
+    DoctorResponse getById(String id);
 }

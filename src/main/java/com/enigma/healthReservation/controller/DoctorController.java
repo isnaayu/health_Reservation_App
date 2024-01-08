@@ -37,4 +37,15 @@ public class DoctorController {
                         .statusCode(HttpStatus.CREATED.value())
                         .build());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable String id){
+        DoctorResponse doctorResponses = doctorService.getById(id);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CommonResponse.builder()
+                        .data(doctorResponses)
+                        .message("Doctors is found")
+                        .statusCode(HttpStatus.CREATED.value())
+                        .build());
+    }
 }

@@ -6,6 +6,7 @@ import com.enigma.healthReservation.dto.response.DoctorResponse;
 import com.enigma.healthReservation.entity.Doctor;
 import com.enigma.healthReservation.repository.DoctorRepository;
 import com.enigma.healthReservation.service.DoctorService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,18 @@ public class DoctorServiceImpl implements DoctorService {
             doctorResponse.setAvailability(doctor.getAvailability());
             return doctorResponse;
         })).collect(Collectors.toList());
+    }
+
+    @Override
+    public DoctorResponse getById(String id) {
+        return doctorRepository.findById(id).map((doctor ->{
+            DoctorResponse doctorResponse = new DoctorResponse();
+            doctorResponse.setId(doctor.getId());
+            doctorResponse.setFirstNameDoctor(doctor.getFirstName());
+            doctorResponse.setLastNameDoctor(doctor.getLastName());
+            doctorResponse.setSpecializationDoctor(doctor.getSpecialization());
+            doctorResponse.setAvailability(doctor.getAvailability());
+            return doctorResponse;
+        })).orElseThrow(() -> new EntityNotFoundException("Doctor not found with ID: " + id));
     }
 }

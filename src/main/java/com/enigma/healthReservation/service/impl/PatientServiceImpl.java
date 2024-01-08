@@ -1,11 +1,13 @@
 package com.enigma.healthReservation.service.impl;
 
 import com.enigma.healthReservation.dto.request.PatientRequest;
+import com.enigma.healthReservation.dto.response.DoctorResponse;
 import com.enigma.healthReservation.dto.response.PatientResponse;
 import com.enigma.healthReservation.entity.Patient;
 import com.enigma.healthReservation.repository.PatientRepository;
 import com.enigma.healthReservation.service.PatientService;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +54,18 @@ public class PatientServiceImpl implements PatientService {
             patientResponse.setPhonePatient(patient.getPhone());
             return patientResponse;
         })).collect(Collectors.toList());
+    }
+
+    @Override
+    public PatientResponse getById(String id) {
+        return patientRepository.findById(id).map((patient ->{
+            PatientResponse patientResponse = new PatientResponse();
+            patientResponse.setId(patient.getId());
+            patientResponse.setFirstName(patient.getFirstName());
+            patientResponse.setLastName(patient.getLastName());
+            patientResponse.setEmailPatient(patient.getEmail());
+            patientResponse.setPhonePatient(patient.getPhone());
+            return patientResponse;
+        })).orElseThrow(() -> new EntityNotFoundException("Patient not found with ID: " + id));
     }
 }
