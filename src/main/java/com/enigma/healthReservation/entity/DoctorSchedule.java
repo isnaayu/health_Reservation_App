@@ -16,6 +16,8 @@ public class DoctorSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @OneToOne
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     private LocalDateTime date;
 }
